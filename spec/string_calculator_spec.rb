@@ -34,5 +34,23 @@ describe StringCalculator do
         expect { StringCalculator.add(11).to raise_error(ArgumentError, 'The method signature permits only one argument, which must be a string.') }
       end
     end
+
+    context 'when more than one argument is passed' do
+      it 'raises error when multiple string arguments passed' do
+        expect { StringCalculator.add('1', '2') }.to raise_error(ArgumentError, /wrong number of arguments/)
+      end
+    end
+
+    context 'when string contains valid new line character' do
+      it 'returns sum of passed numbers' do
+        expect(StringCalculator.add("1\n2,3")).to eq(6)
+      end
+    end
+
+    context 'when string contains invalid new line character' do
+      it 'returns error when new line character is passed at the end' do
+        expect(StringCalculator.add("1,\n")).to eq('Invalid input')
+      end
+    end
   end
 end
