@@ -52,5 +52,17 @@ describe StringCalculator do
         expect(StringCalculator.add("1,\n")).to eq('Invalid input')
       end
     end
+
+    context 'when string has indifferent separators' do
+      it 'considers delimiter and sum number' do
+        expect(StringCalculator.add("//;\n1;2")).to eq 3
+      end
+    end
+
+    context 'when string has different separators but with comma also' do
+      it 'throws invalid input error' do
+        expect(StringCalculator.add("//;\n1;2,3")).to eq 'Invalid input'
+      end
+    end
   end
 end
