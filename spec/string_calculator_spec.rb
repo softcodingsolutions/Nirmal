@@ -64,5 +64,35 @@ describe StringCalculator do
         expect(StringCalculator.add("//;\n1;2,3")).to eq 'Invalid input'
       end
     end
+
+    context 'when string has a single negative number' do
+      it 'raise exception with message containing negative number' do
+        expect { StringCalculator.add('-1,2') }.to raise_error(RuntimeError, 'negative numbers are not allowed -1')
+      end
+
+      it 'does not raise exception' do
+        expect { StringCalculator.add("//;\n1,4,3") }.not_to raise_error(RuntimeError, 'negative numbers are not allowed')
+      end
+    end
+
+    context 'when string has multiple negative numbers' do
+      it 'raise exception with message containing negative numbers' do
+        expect { StringCalculator.add('-1,2,-3').to raise_error(RuntimeError, 'negative numbers are not allowed -1,-3') }
+      end
+
+      it 'does not raise exceptiion' do
+        expect { StringCalculator.add('//;1,3,5') }.not_to raise_error(RuntimeError, 'negative numbers are not allowed')
+      end
+    end
+
+    context 'when string numbers with different delimiter' do
+      it 'does raise an exception with negative number and different delimiter' do
+        expect { StringCalculator.add("//;\n1;2;-3") }.to raise_error(RuntimeError, 'negative numbers are not allowed -3')
+      end
+
+      it 'does not raise any exception with positive number and different delimiter' do
+        expect { StringCalculator.add("//;\n1;2;3") }.not_to raise_error(RuntimeError, 'negative numbers are not allowed')
+      end
+    end
   end
 end

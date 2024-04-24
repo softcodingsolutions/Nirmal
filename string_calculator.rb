@@ -13,6 +13,8 @@ class StringCalculator
     ensure_valid_input(numbers)
 
     numbers_array = get_numeric_values(numbers)
+    confirm_no_negatives(numbers_array)
+
     return 'Invalid input' if numbers_array.nil?
 
     numbers_array.sum
@@ -63,5 +65,28 @@ class StringCalculator
   #   - Default delimiter (comma) if not specified in the input string
   def self.find_separator(numbers)
     numbers.start_with?('//') ? numbers[2] : ','
+  end
+
+  # Method to identify negative numbers from an array of numbers
+  # Arguments:
+  #   - numbers: An array of numbers
+  # Returns:
+  #   - A string containing negative numbers separated by commas
+  def self.retrieve_negative_numbers(numbers)
+    negative_number = numbers.select { |x| x.negative? }
+    negative_number.join(',')
+  end
+
+  # Method to validate if any negative numbers exist in an array of numbers
+  # Arguments:
+  #   - numbers_array: An array of numbers to be validated
+  # Raises:
+  #   - RuntimeError: If any negative numbers are found in the array
+  def self.confirm_no_negatives(numbers_array)
+    return nil if numbers_array.nil?
+
+    numbers_array.each do |num|
+      raise "negative numbers are not allowed #{retrieve_negative_numbers(numbers_array)}" if num.negative?
+    end
   end
 end
