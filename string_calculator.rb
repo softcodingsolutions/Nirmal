@@ -73,8 +73,7 @@ class StringCalculator
   # Returns:
   #   - A string containing negative numbers separated by commas
   def self.retrieve_negative_numbers(numbers)
-    negative_number = numbers.select { |x| x.negative? }
-    negative_number.join(',')
+    numbers.select(&:negative?).join(',')
   end
 
   # Method to validate if any negative numbers exist in an array of numbers
